@@ -124,7 +124,7 @@ export default class DatePicker extends Component {
     });
 
     return (
-      <div>
+      <div className="inputWrapper">
         <input
           className={className}
           type="text"
@@ -186,9 +186,13 @@ export default class DatePicker extends Component {
 
   render() {
     const { isOpen } = this.state;
+    const { attachment, targetAttachment } = this.props;
+
+    const _attachment = attachment?attachment:'top right';
+    const _targetAttachment = targetAttachment?targetAttachment:'top right';
 
     return (
-      <TetherComponent attachment="top center">
+      <TetherComponent attachment={_attachment} targetAttachment={_targetAttachment}>
         { this.renderInput() }
         { isOpen ? this.renderCalendar() : null }
       </TetherComponent>
