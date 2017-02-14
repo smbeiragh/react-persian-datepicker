@@ -26,7 +26,7 @@ export default class DatePicker extends Component {
 
   static defaultProps = {
     inputFormat: 'jYYYY/jM/jD',
-    calendarStyles: require('../styles/basic.css'),
+    calendarStyles: require('./styles'),
     calendarContainerProps: {}
   };
 
