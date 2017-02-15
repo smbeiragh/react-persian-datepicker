@@ -97,6 +97,7 @@ export default class DatePicker extends Component {
     }
 
     this.setMomentValue(momentValue);
+    this.setOpen(false)
   }
 
   handleInputChange(event) {
