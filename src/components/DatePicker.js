@@ -7,6 +7,7 @@ import classnames from 'classnames';
 export const outsideClickIgnoreClass = 'ignore--click--outside';
 
 export default class DatePicker extends Component {
+
   static propTypes = {
     value: PropTypes.object,
     defaultValue: PropTypes.object,
@@ -31,7 +32,7 @@ export default class DatePicker extends Component {
   };
 
   state = {
-    isOpen: this.props.isopen || false,
+    isOpen: this.props.disabled?false:this.props.isOpen || false,
     momentValue: this.props.defaultValue || null,
     inputValue: this.props.defaultValue ?
       this.props.defaultValue.format(this.props.inputFormat) : ''
@@ -45,7 +46,17 @@ export default class DatePicker extends Component {
     if ('value' in nextProps && nextProps.value !== this.props.value) {
       this.setMomentValue(nextProps.value);
     }
-    this.setOpen(nextProps.isOpen)
+
+    if (typeof nextProps.isOpen !== 'undefined') {
+      if (nextProps.isOpen) {
+        if (!this.props.disabled) {
+          this.setOpen(true)
+        }
+      } else {
+        this.setOpen(false)
+      }
+    }
+
   }
 
   setMomentValue(momentValue) {
@@ -126,22 +137,28 @@ export default class DatePicker extends Component {
     });
 
     return (
-      <div className="inputWrapper">
-        <input
-          className={className}
-          type="text"
-          ref="input"
-          onFocus={this.handleFocus.bind(this) }
-          onBlur={this.handleBlur.bind(this) }
-          onChange={this.handleInputChange.bind(this) }
-          onClick={this.handleInputClick.bind(this) }
-          value={inputValue}
-          disabled={disabled}
-          readOnly={readOnly}
-          placeholder={placeholder}
-        />
-      </div>
-    );
+      < div
+    className = "inputWrapper" >
+      < input
+    className = { className }
+    type = "text"
+    ref = "input"
+    onFocus = { this.handleFocus.bind(this)
+  }
+    onBlur = { this.handleBlur.bind(this)
+  }
+    onChange = { this.handleInputChange.bind(this)
+  }
+    onClick = { this.handleInputClick.bind(this)
+  }
+    value = { inputValue }
+    disabled = { disabled }
+    readOnly = { readOnly }
+    placeholder = { placeholder }
+      / >
+      < / div >
+  )
+    ;
   }
 
   renderCalendar() {
@@ -149,35 +166,41 @@ export default class DatePicker extends Component {
     const { timePickerComponent: TimePicker, onChange, min, max, defaultMonth, calendarStyles, calendarContainerProps } = this.props;
 
     return (
-      <div>
-        <Calendar
-          min={min}
-          max={max}
-          selectedDay={momentValue}
-          defaultMonth={defaultMonth}
-          onSelect={this.handleSelectDay.bind(this) }
-          onClickOutside={this.handleClickOutsideCalendar.bind(this) }
-          outsideClickIgnoreClass={outsideClickIgnoreClass}
-          styles={calendarStyles}
-          containerProps={calendarContainerProps}
-        >
-          {
-            TimePicker ? (
-              <TimePicker
-                min={min}
-                max={max}
-                momentValue={momentValue}
-                setMomentValue={this.setMomentValue.bind(this) }
-              />
-            ) : null
-          }
-        </Calendar>
-      </div>
-    );
+      < div >
+      < Calendar
+    min = { min }
+    max = { max }
+    selectedDay = { momentValue }
+    defaultMonth = { defaultMonth }
+    onSelect = { this.handleSelectDay.bind(this)
+  }
+    onClickOutside = { this.handleClickOutsideCalendar.bind(this)
+  }
+    outsideClickIgnoreClass = { outsideClickIgnoreClass }
+    styles = { calendarStyles }
+    containerProps = { calendarContainerProps }
+      >
+      {
+        TimePicker ? (
+        < TimePicker
+          min = { min }
+        max={ max }
+        momentValue={ momentValue }
+        setMomentValue={ this.setMomentValue.bind(this)
+      }
+      / >
+  ) :
+    null
+  }
+  </
+    Calendar >
+    < / div >
+  )
+    ;
   }
 
   removeDate() {
-    const {onChange} = this.props;
+    const { onChange } = this.props;
     if (onChange) {
       onChange('');
     }
@@ -190,14 +213,21 @@ export default class DatePicker extends Component {
   render() {
     const { isOpen } = this.state;
     const { attachment, targetAttachment } = this.props;
-    const _attachment = attachment?attachment:'top right';
-    const _targetAttachment = targetAttachment?targetAttachment:'top right';
+    const _attachment = attachment ? attachment : 'top right';
+    const _targetAttachment = targetAttachment ? targetAttachment : 'top right';
 
     return (
-      <TetherComponent attachment={_attachment} targetAttachment={_targetAttachment}>
-        { this.renderInput() }
-        { isOpen ? this.renderCalendar() : null }
-      </TetherComponent>
-    );
+      < TetherComponent
+    attachment = { _attachment }
+    targetAttachment = { _targetAttachment } >
+      { this.renderInput()
+  }
+    {
+      isOpen ? this.renderCalendar() : null
+    }
+  </
+    TetherComponent >
+  )
+    ;
   }
 }
