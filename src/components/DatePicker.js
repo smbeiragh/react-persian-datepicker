@@ -31,7 +31,7 @@ export default class DatePicker extends Component {
   };
 
   state = {
-    isOpen: false,
+    isOpen: this.props.isopen || false,
     momentValue: this.props.defaultValue || null,
     inputValue: this.props.defaultValue ?
       this.props.defaultValue.format(this.props.inputFormat) : ''
@@ -45,6 +45,7 @@ export default class DatePicker extends Component {
     if ('value' in nextProps && nextProps.value !== this.props.value) {
       this.setMomentValue(nextProps.value);
     }
+    this.setOpen(nextProps.isOpen)
   }
 
   setMomentValue(momentValue) {
@@ -188,7 +189,6 @@ export default class DatePicker extends Component {
   render() {
     const { isOpen } = this.state;
     const { attachment, targetAttachment } = this.props;
-
     const _attachment = attachment?attachment:'top right';
     const _targetAttachment = targetAttachment?targetAttachment:'top right';
 
