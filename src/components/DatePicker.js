@@ -137,6 +137,7 @@ export default class DatePicker extends Component {
     });
 
     return (
+      <div>
       <div
         className = "inputWrapper"
         onClick={(e) => {
@@ -158,8 +159,8 @@ export default class DatePicker extends Component {
         placeholder = { placeholder }
       />
       </div>
-  )
-    ;
+      </div>
+    );
   }
 
   renderCalendar() {

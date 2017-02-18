@@ -1,6 +1,6 @@
 {
   "name": "react-persian-datepicker",
-  "version": "3.0.1hami4",
+  "version": "3.0.1hami5",
   "description": "Persian calendar and date picker components for React",
   "main": "lib/index.js",
   "scripts": {
