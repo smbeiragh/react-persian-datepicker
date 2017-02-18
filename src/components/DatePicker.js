@@ -134,13 +134,13 @@ export default class DatePicker extends Component {
 
   renderInput() {
     const { isOpen, inputValue } = this.state;
-    const { placeholder, disabled, readOnly, name } = this.props;
+    const { placeholder, disabled, readOnly, name, onClick } = this.props;
     const className = classnames(this.props.className, {
       [outsideClickIgnoreClass]: isOpen
     });
 
     return (
-      < div className = "inputWrapper" >
+      < div className = "inputWrapper" onClick={ onClick && onClick.bind(this) } >
       < input
         className = { className }
         type = "text"
