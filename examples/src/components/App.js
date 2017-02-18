@@ -44,7 +44,7 @@ export default class App extends Component {
               title="ورودی تاریخ ساده"
               code={basicDatePickerCode}
             >
-              <DatePicker />
+              <DatePicker disabled />
             </Example>
           </div>
           <div>

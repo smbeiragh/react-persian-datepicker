@@ -124,9 +124,6 @@ export default class DatePicker extends Component {
   }
 
   handleInputClick(e) {
-    if ('onClick' in this.props) {
-      this.props.onClick(e);
-    }
     if (!this.props.disabled) {
       this.setOpen(true)
     }
@@ -140,7 +137,12 @@ export default class DatePicker extends Component {
     });
 
     return (
-      < div className = "inputWrapper" onClick={ onClick && onClick.bind(this) } >
+      <div
+        className = "inputWrapper"
+        onClick={(e) => {
+          onClick && onClick(e)
+        }}
+      >
       < input
         className = { className }
         type = "text"
