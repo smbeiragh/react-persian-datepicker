@@ -123,7 +123,10 @@ export default class DatePicker extends Component {
     this.setState({ inputValue });
   }
 
-  handleInputClick() {
+  handleInputClick(e) {
+    if ('onClick' in this.props) {
+      this.props.onClick(e);
+    }
     if (!this.props.disabled) {
       this.setOpen(true)
     }
@@ -137,27 +140,22 @@ export default class DatePicker extends Component {
     });
 
     return (
-      < div
-    className = "inputWrapper" >
+      < div className = "inputWrapper" >
       < input
-    className = { className }
-    type = "text"
-    ref = "input"
-    onFocus = { this.handleFocus.bind(this)
-  }
-    onBlur = { this.handleBlur.bind(this)
-  }
-    onChange = { this.handleInputChange.bind(this)
-  }
-    onClick = { this.handleInputClick.bind(this)
-  }
-    value = { inputValue }
-    disabled = { disabled }
-    name= { name }
-    readOnly = { readOnly }
-    placeholder = { placeholder }
-      / >
-      < / div >
+        className = { className }
+        type = "text"
+        ref = "input"
+        onFocus = { this.handleFocus.bind(this) }
+        onBlur = { this.handleBlur.bind(this) }
+        onChange = { this.handleInputChange.bind(this) }
+        onClick = { this.handleInputClick.bind(this) }
+        value = { inputValue }
+        disabled = { disabled }
+        name= { name }
+        readOnly = { readOnly }
+        placeholder = { placeholder }
+      />
+      </div>
   )
     ;
   }
@@ -167,37 +165,33 @@ export default class DatePicker extends Component {
     const { timePickerComponent: TimePicker, onChange, min, max, defaultMonth, calendarStyles, calendarContainerProps } = this.props;
 
     return (
-      < div >
-      < Calendar
-    min = { min }
-    max = { max }
-    selectedDay = { momentValue }
-    defaultMonth = { defaultMonth }
-    onSelect = { this.handleSelectDay.bind(this)
-  }
-    onClickOutside = { this.handleClickOutsideCalendar.bind(this)
-  }
-    outsideClickIgnoreClass = { outsideClickIgnoreClass }
-    styles = { calendarStyles }
-    containerProps = { calendarContainerProps }
-      >
-      {
-        TimePicker ? (
-        < TimePicker
+      <div>
+        <Calendar
           min = { min }
-        max={ max }
-        momentValue={ momentValue }
-        setMomentValue={ this.setMomentValue.bind(this)
-      }
-      / >
-  ) :
-    null
-  }
-  </
-    Calendar >
-    < / div >
-  )
-    ;
+          max = { max }
+          selectedDay = { momentValue }
+          defaultMonth = { defaultMonth }
+          onSelect = { this.handleSelectDay.bind(this) }
+          onClickOutside = { this.handleClickOutsideCalendar.bind(this) }
+          outsideClickIgnoreClass = { outsideClickIgnoreClass }
+          styles = { calendarStyles }
+          containerProps = { calendarContainerProps }
+        >
+          {
+            TimePicker ? (
+            <TimePicker
+              min = { min }
+              max={ max }
+              momentValue={ momentValue }
+              setMomentValue={ this.setMomentValue.bind(this) }
+            />
+          ) :
+            null
+          }
+        </Calendar>
+      </div>
+  );
+
   }
 
   removeDate() {
@@ -218,17 +212,13 @@ export default class DatePicker extends Component {
     const _targetAttachment = targetAttachment ? targetAttachment : 'top right';
 
     return (
-      < TetherComponent
-    attachment = { _attachment }
-    targetAttachment = { _targetAttachment } >
-      { this.renderInput()
-  }
-    {
-      isOpen ? this.renderCalendar() : null
-    }
-  </
-    TetherComponent >
-  )
-    ;
+        < TetherComponent
+          attachment = { _attachment }
+          targetAttachment = { _targetAttachment }
+        >
+          { this.renderInput() }
+          { isOpen ? this.renderCalendar() : null }
+        </TetherComponent >
+      );
   }
 }
